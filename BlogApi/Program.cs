@@ -4,7 +4,7 @@ using Scalar.AspNetCore;
 namespace BlogApi
 {
     public class Program
-    { 0
+    { 
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);

@@ -12,5 +12,23 @@
       "url": "http://localhost:5275"
     }
   ],
-  "paths": { }
+  "paths": {
+    "/bloggers": {
+      "get": {
+        "tags": [
+          "Blogger"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Blogger"
+    }
+  ]
 }
