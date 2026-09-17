@@ -27,6 +27,22 @@
   },
   {
     "ContainingType": "BlogApi.Controllers.BloggerController",
+    "Method": "LoginBlogger",
+    "RelativePath": "bloggers/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "loginBloggerDto",
+        "Type": "BlogApi.Models.DTOs.LoginBloggerDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BlogApi.Controllers.BloggerController",
     "Method": "AddNewBlogger",
     "RelativePath": "bloggers/register",
     "HttpMethod": "POST",

@@ -100,5 +100,33 @@ namespace BlogApi.Controllers
 
             return new { message = "Sikeres hozzáadás.", result = addNewBloggerDto };
         }
+
+        [HttpPost("login")]
+        public object LoginBlogger(LoginBloggerDto loginBloggerDto)
+        {
+            var connector = new MySqlConnection(ConnectionString);
+
+            connector.Open();
+
+            string sql = @"SELECT `id` FROM `blogger` 
+                            WHERE `email` = @email AND `password`= @password;";
+
+            var cmd = new MySqlCommand(sql, connector);
+            cmd.Parameters.AddWithValue("@email", loginBloggerDto.Email);
+            cmd.Parameters.AddWithValue("@password", loginBloggerDto.Password);
+
+            var datareader = cmd.ExecuteReader();
+
+
+            if (datareader.Read() == true)
+            {
+                return new { message = "Sikeres belépés.", result = datareader.GetInt32("id") };
+            }
+            else
+            {
+                return new { message = "Sikertelen belépés.", result = loginBloggerDto };
+            }
+            
+        }
     }
 }
