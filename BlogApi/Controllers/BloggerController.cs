@@ -11,7 +11,7 @@ namespace BlogApi.Controllers
     {
         public string ConnectionString = "server=localhost;database=blog13B;uid=root;password=";
 
-        [HttpGet]
+        [HttpGet("all")]
         public object GetAllBlogger() 
         {
             List<Blogger> bloggers = new List<Blogger>();
@@ -44,6 +44,36 @@ namespace BlogApi.Controllers
             connector.Close();
 
             return new { message = "Sikeres lekérdezés.", result = bloggers};
+        }
+
+        [HttpGet("byId")]
+        public object GetBloggerById(int id) 
+        {
+            var connector = new MySqlConnection(ConnectionString);
+
+            connector.Open();
+
+            string sql = @"SELECT * FROM `blogger` WHERE `id` = @id;";
+
+            var cmd = new MySqlCommand(sql, connector);
+            cmd.Parameters.AddWithValue("@id", id);
+
+            var datareader = cmd.ExecuteReader();
+
+            datareader.Read();
+
+            var blogger = new Blogger
+            {
+                Id = datareader.GetInt32(0),
+                Name = datareader.GetString(1),
+                Email = datareader.GetString(2),
+                Age = datareader.GetInt32(3),
+                Password = datareader.GetString(4),
+                RegistrationTime = datareader.GetDateTime(5)
+            };
+
+            connector.Close();
+            return new { message = "Sikeres találat.", result = blogger};
         }
     }
 }
