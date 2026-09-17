@@ -1,6 +1,22 @@
 [
   {
     "ContainingType": "BlogApi.Controllers.BloggerController",
+    "Method": "DeleteBlogger",
+    "RelativePath": "bloggers",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BlogApi.Controllers.BloggerController",
     "Method": "GetAllBlogger",
     "RelativePath": "bloggers/all",
     "HttpMethod": "GET",

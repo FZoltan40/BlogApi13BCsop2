@@ -48,7 +48,7 @@ namespace BlogApi.Controllers
         }
 
         [HttpGet("byId")]
-        public object GetBloggerById(int id) 
+        public object GetBloggerById([FromQuery]int id) 
         {
             var connector = new MySqlConnection(ConnectionString);
 
@@ -102,7 +102,7 @@ namespace BlogApi.Controllers
         }
 
         [HttpPost("login")]
-        public object LoginBlogger(LoginBloggerDto loginBloggerDto)
+        public object LoginBlogger([FromBody]LoginBloggerDto loginBloggerDto)
         {
             var connector = new MySqlConnection(ConnectionString);
 
@@ -127,6 +127,28 @@ namespace BlogApi.Controllers
                 return new { message = "Sikertelen belépés.", result = loginBloggerDto };
             }
             
+        }
+
+        [HttpDelete]
+        public object DeleteBlogger([FromBody]int id)
+        {
+            var connector = new MySqlConnection(ConnectionString);
+
+            connector.Open();
+
+            string sql = @"DELETE FROM `blogger` WHERE `id` = @id";
+
+            var cmd = new MySqlCommand(sql, connector);
+            cmd.Parameters.AddWithValue("@id", id);
+            
+            object result = cmd.ExecuteNonQuery() > 0 ? new { message = "Sikeres törlés." } : new { message = "Nincs ilyen felhasználó." };
+
+            connector.Close();
+
+            return result;
+            
+
+          
         }
     }
 }
