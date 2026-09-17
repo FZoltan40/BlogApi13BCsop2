@@ -129,7 +129,7 @@ namespace BlogApi.Controllers
             
         }
 
-        [HttpDelete]
+        [HttpDelete("deleteById")]
         public object DeleteBlogger([FromBody]int id)
         {
             var connector = new MySqlConnection(ConnectionString);
@@ -146,9 +146,34 @@ namespace BlogApi.Controllers
             connector.Close();
 
             return result;
-            
-
           
+        }
+
+        [HttpPut("update")]
+        public object UpateBlogger([FromQuery]int id, [FromBody]UpdateBloggerDto updateBloggerDto)
+        {
+            var connector = new MySqlConnection(ConnectionString);
+
+            connector.Open();
+
+            string sql = @"UPDATE `blogger` SET                                                 `name`=@name,`email`=@email,`age`=@age,`password`=@password 
+               WHERE `id`= @id;";
+
+            var cmd = new MySqlCommand(sql, connector);
+
+            cmd.Parameters.AddWithValue("@name", updateBloggerDto.Name);
+            cmd.Parameters.AddWithValue("@email", updateBloggerDto.Email);
+            cmd.Parameters.AddWithValue("@age", updateBloggerDto.Age);
+            cmd.Parameters.AddWithValue("@password", updateBloggerDto.Password);
+            cmd.Parameters.AddWithValue("@id", id);
+
+            object result = cmd.ExecuteNonQuery() > 0 ? new { message = "Sikeres frissítés." } : new { message = "Nincs ilyen felhasználó." };
+
+            connector.Close();
+
+            return result;
+
+           
         }
     }
 }
